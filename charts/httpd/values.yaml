@@ -7,6 +7,23 @@ replicaCount: 3
 image:
   repository: nataliagranato/httpd
   pullPolicy: IfNotPresent
+  livenessProbe:
+    failureThreshold: 3
+    httpGet:
+      path: /
+      port: http
+      scheme: HTTP
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+  pod_anti_affinity: true
+  readinessProbe:
+    failureThreshold: 6
+    initialDelaySeconds: 5
+    path: /
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 5
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
